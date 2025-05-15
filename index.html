@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alarm clock</title>
+    <style>
+      /* Gradient background */
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #fff;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      input[type="time"] {
+        padding: 10px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+      }
+
+      button {
+        padding: 10px 20px;
+        font-size: 1rem;
+        background-color: #ffffff;
+        color: #764ba2;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      button:hover {
+        background-color: #f0f0f0;
+      }
+
+      #set {
+        margin-top: 20px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Alarm Clock</h1>
+
+    <input type="time" id="alarmTime" />
+    <button onclick="setAlarm()">Set Alarm</button>
+    <p id="set"></p>
+
+    <script>
+      let alarmTime = null;
+      isAlarmSet = false;
+
+      function setAlarm() {
+        alarmTime = document.getElementById("alarmTime");
+        isAlarmSet = true;
+        document.getElementById(
+          "set"
+        ).innerHTML = `Alarm set for ${alarmTime.value}`;
+      }
+
+      setInterval(() => {
+        if (isAlarmSet && alarmTime) {
+          const now = new Date();
+          const currTime = now.toTimeString().slice(0, 5);
+          if (currTime === alarmTime.value) {
+            document.getElementById("set").innerHTML = "⏰ Alarm ringing";
+            const audio = new Audio("/elvish_bhai_ke_aage.mp3");
+            audio.play();
+            isAlarmSet = false;
+          }
+        }
+      }, 1000);
+    </script>
+  </body>
+</html>
